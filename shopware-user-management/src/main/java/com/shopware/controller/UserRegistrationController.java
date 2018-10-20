@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopware.common.response.CommonResponse;
+import com.shopware.request.FetchProfileRequest;
 import com.shopware.request.Registration;
 import com.shopware.service.UserManagementService;
 
@@ -26,4 +27,11 @@ public class UserRegistrationController {
 	public CommonResponse test() {
 		return userManagementService.test();
 	}
+
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public CommonResponse profile(@RequestBody FetchProfileRequest profileRequest) {
+
+		return userManagementService.profile(profileRequest);
+	}
+
 }
