@@ -30,12 +30,12 @@ public class PermanentAddressRequest {
 	private String street;
 	@Column(name = "HOUSE_NO")
 	private String houseNo;
-	
+
 	@Column(name = "ADDRESS_TYPE")
 	private String addresType;
 
 	@OneToOne
-	@JoinColumn(name = "MSISDN")
+	@JoinColumn(name = "MSISDN", unique = true, nullable = false)
 	private RegistrationRequest perRequest;
 
 }

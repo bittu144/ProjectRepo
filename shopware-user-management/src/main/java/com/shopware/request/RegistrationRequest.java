@@ -21,20 +21,20 @@ public class RegistrationRequest {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "USER_NAME", nullable = false, length = 20)
+	@Column(name = "USER_NAME", unique = true, nullable = false, length = 50)
 	private String userName;
 
 	@Id
-	@Column(name = "MSISDN", nullable = false, length = 20)
+	@Column(name = "MSISDN",nullable = false, length = 20)
 	private long msisdn;
 
 	@Column(name = "ALT_MSISDN", length = 20)
 	private String altMsisdn;
 
-	@Column(name = "EMAIL", length = 20)
+	@Column(name = "EMAIL", unique = true, length = 50)
 	private String email;
 
-	@Column(name = "ALT_EMAIL", length = 20)
+	@Column(name = "ALT_EMAIL", length = 50)
 	private String altEmail;
 
 	@Column(name = "PASSWORD", length = 20)
@@ -57,12 +57,15 @@ public class RegistrationRequest {
 
 	@Column(name = "MPIN", nullable = false, length = 10)
 	private String mpin;
-	
+
 	@Column(name = "STATUS", nullable = false, length = 10)
-	private String STATUS;
-	
-	@Column(name = "BLOCKED_TIME", nullable = false, length = 10)
-	private String 	blockedTime;
+	private int status;
+
+	@Column(name = "BLOCKED_TIME", length = 50)
+	private String blockedTime;
+
+	@Column(name = "LOGIN_FAIL_COUNT", nullable = false, length = 10)
+	private int loginFailCount;
 
 	@OneToOne(mappedBy = "perRequest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private PermanentAddressRequest permanentAddressRequest;
@@ -70,14 +73,35 @@ public class RegistrationRequest {
 	@OneToOne(mappedBy = "tempRequest", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private TempAddressRequest tempAddressRequest;
 
-	/*@OneToMany(mappedBy = "other")
-	private List<OtherInfo> info;*/
-
 	@OneToOne(mappedBy = "sourceInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private SourceInfoRequest sourceInfoRequest;
 
 	@OneToOne(mappedBy = "transactionInfo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private TransactionInfoRequest txnInfo;
+
+	public int getSTATUS() {
+		return status;
+	}
+
+	public void setSTATUS(int status) {
+		this.status = status;
+	}
+
+	public String getBlockedTime() {
+		return blockedTime;
+	}
+
+	public void setBlockedTime(String blockedTime) {
+		this.blockedTime = blockedTime;
+	}
+
+	public int getLoginFailCount() {
+		return loginFailCount;
+	}
+
+	public void setLoginFailCount(int loginFailCount) {
+		this.loginFailCount = loginFailCount;
+	}
 
 	public long getId() {
 		return id;
@@ -195,9 +219,9 @@ public class RegistrationRequest {
 		return tempAddressRequest;
 	}
 
-	/*public List<OtherInfo> getInfo() {
-		return info;
-	}*/
+	/*
+	 * public List<OtherInfo> getInfo() { return info; }
+	 */
 
 	public SourceInfoRequest getSourceInfoRequest() {
 		return sourceInfoRequest;

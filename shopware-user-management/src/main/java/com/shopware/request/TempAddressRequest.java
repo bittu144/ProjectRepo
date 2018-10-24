@@ -36,7 +36,7 @@ public class TempAddressRequest {
 
 	
 	@OneToOne
-	@JoinColumn(name = "MSISDN")
+	@JoinColumn(name = "MSISDN", unique = true, nullable = false)
 	private RegistrationRequest tempRequest;
 
 }

@@ -13,11 +13,11 @@ public class SetCommonResponse {
 	@Autowired
 	private MessageSource messageSource;
 
-	public CommonResponse setCommonResponse(Object obj) {
+	public CommonResponse setCommonResponse(Object obj, String message, int statusCode) {
 		CommonResponseStatus responseStatus = new CommonResponseStatus();
-		responseStatus.setMessage(ErrorCode.REGISTRATION_SUCCESSFULL.getMessage(messageSource, null, null));
+		responseStatus.setMessage(message);
 		responseStatus.setStatus(ErrorCode.SUCCESS.getMessage(messageSource, null, null));
-		responseStatus.setStatusCode(ErrorCode.REGISTRATION_SUCCESSFULL.getStatus());
+		responseStatus.setStatusCode(statusCode);
 		return new CommonResponse(responseStatus, obj);
 
 	}
