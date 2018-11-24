@@ -19,18 +19,18 @@ import lombok.Data;
 public class SourceInfoRequest {
 
 	@Id
-	@Column(name = "ID")
+	@Column(name = "SOURCE_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	@Column(name = "INIT_MSISDN")
-	private String msisdn;
+	private long sourceMsisdn;
 
 	@Column(name = "MPIN")
-	private String mpin;
-	
+	private String sourceMpin;
+
 	@OneToOne
-	@JoinColumn(name = "MSISDN")
+	@JoinColumn(name = "REGISTRATION_ID", unique = true, nullable = false)
 	private RegistrationRequest sourceInfo;
 
 }

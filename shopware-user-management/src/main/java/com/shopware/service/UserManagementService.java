@@ -20,6 +20,7 @@ import com.shopware.exception.GenericException;
 import com.shopware.request.FetchProfileRequest;
 import com.shopware.request.LoginRequest;
 import com.shopware.request.Registration;
+import com.shopware.request.WalletDetailsRequest;
 import com.shopware.response.BlockedUserDetails;
 import com.shopware.response.LoginResponse;
 import com.shopware.response.PerAddressResponse;
@@ -28,6 +29,7 @@ import com.shopware.response.TempAddressResponse;
 import com.shopware.response.UserProfileResponse;
 import com.shopware.utility.ErrorCode;
 import com.shopware.utility.SetCommonResponse;
+import com.shopware.utility.Utility;
 
 @Service
 public class UserManagementService {
@@ -37,10 +39,6 @@ public class UserManagementService {
 
 	@Value("${user.blocked.time}")
 	private long defaultUnBlockedTime;
-
-	/*
-	 * @Autowired private ServiceUtility serviceUtility;
-	 */
 
 	@Autowired
 	private MessageSource messageSource;
@@ -52,14 +50,32 @@ public class UserManagementService {
 		registration.getRegistrationRequest().setBlockedTime(null);
 		userManagementDao.registrationDao(registration);
 
+		List<WalletDetailsRequest> walletDetailsList = new ArrayList<WalletDetailsRequest>();
+		WalletDetailsRequest walletDetailsRequest = new WalletDetailsRequest();
+		walletDetailsRequest.setBalance("0");
+		walletDetailsRequest.setEligibility("1");
+		walletDetailsRequest.setInsertDate(new Date() + "");
+		walletDetailsRequest.setMsisdn(registration.getRegistrationRequest().getMsisdn());
+		walletDetailsRequest.setStatus("1");
+		walletDetailsRequest.setWallet("cash");
+		walletDetailsRequest.setWalletId(Long.parseLong(Utility.getRandomValue()));
+		walletDetailsRequest.setWalletType("1");
+		walletDetailsList.add(walletDetailsRequest);
+
+		WalletDetailsRequest walletDetailsRequest2 = new WalletDetailsRequest();
+		walletDetailsRequest2.setBalance("0");
+		walletDetailsRequest2.setEligibility("1");
+		walletDetailsRequest2.setInsertDate(new Date() + "");
+		walletDetailsRequest2.setMsisdn(registration.getRegistrationRequest().getMsisdn());
+		walletDetailsRequest2.setStatus("1");
+		walletDetailsRequest2.setWallet("cash");
+		walletDetailsRequest2.setWalletId(Long.parseLong(Utility.getRandomValue()));
+		walletDetailsRequest2.setWalletType("2");
+		walletDetailsList.add(walletDetailsRequest2);
+		//userManagementDao.walletCreation(walletDetailsList);
+
 		return commonResponse.setCommonResponse(null,
 
-				ErrorCode.REGISTRATION_SUCCESSFULL.getMessage(messageSource, null, null),
-				ErrorCode.REGISTRATION_SUCCESSFULL.getStatus());
-	}
-
-	public CommonResponse test() {
-		return commonResponse.setCommonResponse(null,
 				ErrorCode.REGISTRATION_SUCCESSFULL.getMessage(messageSource, null, null),
 				ErrorCode.REGISTRATION_SUCCESSFULL.getStatus());
 	}
@@ -187,7 +203,6 @@ public class UserManagementService {
 			for (int j = 0; j < perAddressResponses.size(); j++) {
 				PerAddressResponse perAddress = perAddressResponses.get(j);
 				if (perAddress.getAddresType().equals("0")) {
-
 					perAddressResponse.setAddresType(perAddress.getAddresType());
 					perAddressResponse.setCity(perAddress.getCity());
 					perAddressResponse.setCountry(perAddress.getCountry());
@@ -200,7 +215,6 @@ public class UserManagementService {
 				}
 
 				if (perAddress.getAddresType().equals("1")) {
-
 					tempAddressResponse.setAddresType(perAddress.getAddresType());
 					tempAddressResponse.setCity(perAddress.getCity());
 					tempAddressResponse.setCountry(perAddress.getCountry());

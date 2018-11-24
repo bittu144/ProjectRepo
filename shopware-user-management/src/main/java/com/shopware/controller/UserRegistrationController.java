@@ -25,11 +25,6 @@ public class UserRegistrationController {
 		return userManagementService.registrationService(registration);
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public CommonResponse test() {
-		return userManagementService.test();
-	}
-
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public CommonResponse profile(@RequestBody FetchProfileRequest profileRequest) {
 		return userManagementService.profile(profileRequest);

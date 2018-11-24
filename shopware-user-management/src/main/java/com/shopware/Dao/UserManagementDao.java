@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.shopware.request.FetchProfileRequest;
 import com.shopware.request.LoginRequest;
 import com.shopware.request.Registration;
+import com.shopware.request.WalletDetailsRequest;
 import com.shopware.response.LoginResponse;
 import com.shopware.response.PerAddressResponse;
 import com.shopware.response.ProfileResponse;
@@ -38,11 +39,17 @@ public class UserManagementDao {
 				.setPerRequest(registration.getRegistrationRequest());
 
 		registration.getRegistrationRequest().getTxnInfo().setTransactionInfo(registration.getRegistrationRequest());
+		registration.getRegistrationRequest().getSourceInfoRequest()
+				.setSourceInfo(registration.getRegistrationRequest());
 
 		registration.setRegistrationRequest(registration.getRegistrationRequest());
 
 		getSession().save(registration.getRegistrationRequest());
 
+	}
+
+	public void walletCreation(List<WalletDetailsRequest> walletDetailsList) {
+		getSession().save(walletDetailsList);
 	}
 
 	public List<ProfileResponse> getProfile(FetchProfileRequest profileRequest) {

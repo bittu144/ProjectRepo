@@ -32,7 +32,7 @@ public class TransactionInfoRequest {
 	private String responseId;
 
 	@OneToOne
-	@JoinColumn(name = "MSISDN")
+	@JoinColumn(name = "REGISTRATION_ID", unique = true, nullable = false)
 	private RegistrationRequest transactionInfo;
 
 }
